@@ -1,0 +1,18 @@
+@startuml Agency
+
+left to right direction
+skinparam packageStyle rectangle
+
+rectangle "Жилищное агентство" {
+    usecase (Поиск жилья квартиросъемщиком) as search
+    usecase (Аренда жилья квартиросъемщиком) as rent
+    usecase (Предложение жилья владельцем) as offer
+
+    actor Квартиросъемщик as tenant
+    actor :Владелец жилья: as owner
+
+    tenant --> search
+    tenant --> rent
+    owner --> offer
+}
+@enduml
