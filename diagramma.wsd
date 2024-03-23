@@ -4,25 +4,30 @@ left to right direction
 skinparam packageStyle rectangle
 
 rectangle "Жилищное агентство" {
-    usecase (Поиск жилья для покупки) as searchForBuy
-    usecase (Поиск жилья для аренды) as searchForRent 
-    usecase (Выставить недвижимость на продажу) as sellOffer
+    usecase (Покупка недвижимости) as searchForBuy
+    usecase (Аренда недвижимости) as searchForRent 
+    usecase (Продажа недвижимость) as sellOffer
     usecase (Сдача недвижимости в аренду) as rentOffer
+    usecase (Составление договора аренды) as rentDoc
+    usecase (Составление договора сделки купли-продажи) as sellDoc
 
 
     actor Клиент as client
     actor :Менеджер Агентсва По Продаже Недвижимости: as sell_manager
     actor :Менеджер Агентсва По Аренде Недвижимости: as rent_manager
 
-    client --> searchForBuy
-    client --> searchForRent
-    client --> sellOffer
-    client --> rentOffer
+    client -- searchForBuy
+    client -- searchForRent
+    client -- sellOffer
+    client -- rentOffer
 
-    searchForBuy --> sell_manager
-    sellOffer --> sell_manager
-    searchForRent --> rent_manager
-    rentOffer --> rent_manager 
+    searchForBuy ..> sellDoc: <<include>>
+    sellOffer ..> sellDoc: <<include>>
+    searchForRent ..> rentDoc: <<include>>
+    rentOffer ..> rentDoc: <<include>>
+
+    sell_manager -- sellDoc
+    rent_manager -- rentDoc
 
 }
 
